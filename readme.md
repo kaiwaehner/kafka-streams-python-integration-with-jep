@@ -55,12 +55,12 @@ Kafka Streams Python example
 
 ## Jython vs. JyNI vs. Py4J vs. Jep for Java-Python Integration
 
-Why this project uses Jep (Java Embedded Python):
+I spent some time readig different websites, Stackoverflow discussions and (often several years old) blog posts. I only knew Jython and it is was my first thought for integration of Python with Java, but I learned a lot. Here I describe why this project uses Jep (Java Embedded Python):
 
-* Jython is basically a re-implementation of python in Java. Although it does include most of the python modules, it lacks the support for C-Extension modules. Which essentially renders Jython useless for most of the libraries in the ML ecosystem as all of them use C-Extension to speedup the processing.
+* [Jython](http://www.jython.org/) is basically a re-implementation of python in Java. Although it does include most of the python modules, it lacks the support for C-Extension modules. Which essentially renders Jython useless for most of the libraries in the ML ecosystem as all of them use C-Extension to speedup the processing. I was really surprised to see that the last release of Jython was in May 2015.
 
-* JyNI (Jython Native Interface) is a compatibility layer with the goal to enable Jython to use native CPython extensions like NumPy or SciPy. However, JyNI doesn’t currently support the entire Python C-API, so it is not currently at a state where we can use it for libraries built using Cython.
+* [JyNI (Jython Native Interface)](https://jyni.org/) is a compatibility layer with the goal to enable Jython to use native CPython extensions like NumPy or SciPy. However, JyNI doesn’t currently support the entire Python C-API, so it is not currently at a state where we can use it for libraries built using Cython.
 
-* Py4J (A Bridge between Python and Java) enables Python programs running in a Python interpreter to dynamically access Java objects in a Java Virtual Machine. This is the other way round and not helpful - we need to run Python from Java, not Java from Python.
+* [Py4J (A Bridge between Python and Java)](https://www.py4j.org/) enables Python programs running in a Python interpreter to dynamically access Java objects in a Java Virtual Machine. This is the other way round and not helpful - we need to run Python from Java, not Java from Python.
 
-* Jep: (Java Embeded Python) Jep takes a different route and embeds CPython in Java using JNI. If you need to include CPython modules (such as numpy or other ML components), then Jep is the way to go.
+* [Jep: (Java Embeded Python)](https://github.com/ninia/jep) takes a different route and embeds CPython in Java using JNI. If you need to include CPython modules (such as numpy or other ML components), then Jep is the way to go.
