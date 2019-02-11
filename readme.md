@@ -4,7 +4,7 @@
 
 This project contains shows how to embed native Python code into a Kafka Streams application, e.g. to execute analytic models which are only available as Python source code.
 
-The project uses [Jep (Java Embedded Python)](https://github.com/ninia/jep). The end of the readme describe why Jep is used, and not other Java-Python integration alternatives like Jython or JyNi.
+The project uses [Jep (Java Embedded Python)](https://github.com/ninia/jep). The end of the readme describe why Jep is used, and not other Java-Python integration alternatives like Jython, JyNi or Py4J.
 
 ## Machine Learning as Motivation for Integration of Python Source Code into a JVM Project
 
@@ -53,15 +53,14 @@ Kafka Streams Python example
 * Keras / TensorFlow
 * TODO
 
-## Jython vs. JyNI vs. Jep for Java-Python Integration
+## Jython vs. JyNI vs. Py4J vs. Jep for Java-Python Integration
 
-Why this project uses Jep (Java Embeded Python):
+Why this project uses Jep (Java Embedded Python):
 
-The following is copied from [Quora](https://www.quora.com/Is-there-a-way-to-use-SciPy-libraries-in-Java-Scala), kudos to Samuel Pong:
+* Jython is basically a re-implementation of python in Java. Although it does include most of the python modules, it lacks the support for C-Extension modules. Which essentially renders Jython useless for most of the libraries in the ML ecosystem as all of them use C-Extension to speedup the processing.
 
-* Jython: Jython is basically a re-implementation of python in Java. Although it does include most of the python modules, it lacks the support for C-Extension modules. Which essentially renders Jython useless for most of the libraries in the ML ecosystem as all of them use C-Extension to speedup the processing.
+* JyNI (Jython Native Interface) is a compatibility layer with the goal to enable Jython to use native CPython extensions like NumPy or SciPy. However, JyNI doesn’t currently support the entire Python C-API, so it is not currently at a state where we can use it for libraries built using Cython.
 
-* JyNI: (Jython Native Interface) JyNI is a compatibility layer with the goal to enable Jython to use native CPython extensions like NumPy or SciPy. However, JyNI doesn’t currently support the entire Python C-API, so it is not currently at a state where we can use it for libraries built using Cython.
+* Py4J (A Bridge between Python and Java) enables Python programs running in a Python interpreter to dynamically access Java objects in a Java Virtual Machine. This is the other way round and not helpful - we need to run Python from Java, not Java from Python.
 
-* Jep: (Java Embeded Python) Jep takes a different route and embeds CPython in Java using JNI. Long story short, if you need to include CPython modules (such as numpy) Jep is the way to go.
-
+* Jep: (Java Embeded Python) Jep takes a different route and embeds CPython in Java using JNI. If you need to include CPython modules (such as numpy or other ML components), then Jep is the way to go.
